@@ -3,18 +3,23 @@ const ctx = canvas.getContext("2d");
 const scoreDisplay = document.getElementById("score");
 
 // Sonidos
-const eatSound = new Audio("comer.mp3");
-const gameOverSound = new Audio("gameover.mp3");
+const eatSound = document.getElementById("eatSound");
+const gameOverSound = document.getElementById("gameOverSound");
 
-// Tamaño del canvas
-canvas.width = 400;
-canvas.height = 400;
+// Ajustar tamaño del canvas dinámicamente
+function resizeCanvas() {
+    const size = Math.min(window.innerWidth, window.innerHeight) * 0.9;
+    canvas.width = size - (size % 20); // Asegurar múltiplos de 20
+    canvas.height = canvas.width;
+}
+resizeCanvas();
+window.addEventListener("resize", resizeCanvas);
 
 // Tamaño de cada celda
 const box = 20;
 
 // Posición inicial de la serpiente
-let snake = [{ x: 200, y: 200 }];
+let snake = [{ x: box * 5, y: box * 5 }];
 
 // Dirección inicial
 let dx = box;
@@ -27,14 +32,26 @@ let food = {
 };
 
 // Variables de velocidad y puntaje
-let speed = 150;  // Tiempo entre cada frame en milisegundos
+let speed = 150;
 let score = 0;
+
+// Coordenadas para gestos táctiles
+let touchStartX = 0, touchStartY = 0;
+let touchEndX = 0, touchEndY = 0;
+
+// Habilitar sonido en móviles al primer toque
+function enableAudio() {
+    eatSound.play().catch(() => {});
+    gameOverSound.play().catch(() => {});
+    document.removeEventListener("click", enableAudio);
+}
+document.addEventListener("click", enableAudio);
 
 // Movimiento de la serpiente
 function move() {
     let newHead = { x: snake[0].x + dx, y: snake[0].y + dy };
 
-    // Verificar colisiones con las paredes
+    // Verificar colisiones con paredes
     if (newHead.x < 0 || newHead.x >= canvas.width || newHead.y < 0 || newHead.y >= canvas.height) {
         gameOver();
         return;
@@ -48,7 +65,6 @@ function move() {
         }
     }
 
-    // Agregar nueva cabeza
     snake.unshift(newHead);
 
     // Verificar si come la comida
@@ -56,23 +72,16 @@ function move() {
         eatSound.play();
         score += 10;
         scoreDisplay.textContent = score;
-
-        // Aumentar la velocidad cada 5 comidas
-        if (score % 50 === 0) {
-            speed *= 0.9;  // Reduce el tiempo entre frames
-        }
-
-        // Nueva comida
         food = {
             x: Math.floor(Math.random() * (canvas.width / box)) * box,
             y: Math.floor(Math.random() * (canvas.height / box)) * box,
         };
     } else {
-        snake.pop(); // Si no come, eliminamos la última parte
+        snake.pop();
     }
 }
 
-// Dibujar la serpiente y la comida
+// Dibujar el juego
 function draw() {
     ctx.fillStyle = "#282c34";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -88,30 +97,67 @@ function draw() {
     ctx.fillRect(food.x, food.y, box, box);
 }
 
-// Controlar la serpiente con el teclado (WASD)
+// Control con teclado
 document.addEventListener("keydown", (event) => {
-    const tecla = event.key.toLowerCase(); // Convierte la tecla a minúscula
-
-    if (tecla === "w" && dy === 0) {  // Arriba
+    if (event.key === "w" && dy === 0) {
         dx = 0;
         dy = -box;
-    } else if (tecla === "s" && dy === 0) { // Abajo
+    } else if (event.key === "s" && dy === 0) {
         dx = 0;
         dy = box;
-    } else if (tecla === "a" && dx === 0) { // Izquierda
+    } else if (event.key === "a" && dx === 0) {
         dx = -box;
         dy = 0;
-    } else if (tecla === "d" && dx === 0) { // Derecha
+    } else if (event.key === "d" && dx === 0) {
         dx = box;
         dy = 0;
     }
 });
 
+// Detectar gestos táctiles (para móviles)
+canvas.addEventListener("touchstart", (event) => {
+    event.preventDefault(); // Evita desplazamiento de la página
+    touchStartX = event.touches[0].clientX;
+    touchStartY = event.touches[0].clientY;
+});
+
+canvas.addEventListener("touchend", (event) => {
+    event.preventDefault();
+    touchEndX = event.changedTouches[0].clientX;
+    touchEndY = event.changedTouches[0].clientY;
+    handleSwipe();
+});
+
+function handleSwipe() {
+    let diffX = touchEndX - touchStartX;
+    let diffY = touchEndY - touchStartY;
+
+    if (Math.abs(diffX) > Math.abs(diffY)) {
+        if (diffX > 0 && dx === 0) {
+            dx = box;
+            dy = 0;
+        } else if (diffX < 0 && dx === 0) {
+            dx = -box;
+            dy = 0;
+        }
+    } else {
+        if (diffY > 0 && dy === 0) {
+            dx = 0;
+            dy = box;
+        } else if (diffY < 0 && dy === 0) {
+            dx = 0;
+            dy = -box;
+        }
+    }
+}
+
 // Función de Game Over
 function gameOver() {
     gameOverSound.play();
-    alert(`Game Over\nPuntaje final: ${score}`);
-    document.location.reload();
+    setTimeout(() => {
+        alert(`Game Over\nPuntaje final: ${score}`);
+        document.location.reload();
+    }, 100);
 }
 
 // Ejecutar el juego con velocidad variable

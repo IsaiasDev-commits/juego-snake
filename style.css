@@ -3,10 +3,13 @@ body {
     background-color: #282c34;
     color: white;
     font-family: Arial, sans-serif;
+    margin: 0;
+    overflow: hidden; /* Evita scroll innecesario en móviles */
 }
 
 canvas {
     border: 2px solid white;
+    touch-action: none; /* Evita zoom y desplazamientos accidentales */
 }
 
 p {
