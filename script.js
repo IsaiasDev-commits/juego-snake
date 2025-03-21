@@ -1,16 +1,16 @@
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
 const scoreDisplay = document.getElementById("score");
+const restartButton = document.getElementById("restartButton");
 
 // Sonidos
 const eatSound = document.getElementById("eatSound");
 const gameOverSound = document.getElementById("gameOverSound");
 
-// Ajustar tamaño del canvas dinámicamente
+// Ajustar tamaño del canvas
 function resizeCanvas() {
-    const size = Math.min(window.innerWidth, window.innerHeight) * 0.9;
-    canvas.width = size - (size % 20); // Asegurar múltiplos de 20
-    canvas.height = canvas.width;
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
 }
 resizeCanvas();
 window.addEventListener("resize", resizeCanvas);
@@ -19,45 +19,52 @@ window.addEventListener("resize", resizeCanvas);
 const box = 20;
 
 // Posición inicial de la serpiente
-let snake = [{ x: box * 5, y: box * 5 }];
+let snake;
+let dx;
+let dy;
+let food;
+let speed;
+let score;
+let gameInterval;
 
-// Dirección inicial
-let dx = box;
-let dy = 0;
+function initializeGame() {
+    snake = [{ x: box * 5, y: box * 5 }];
+    dx = box;
+    dy = 0;
+    food = {
+        x: Math.floor(Math.random() * (canvas.width / box)) * box,
+        y: Math.floor(Math.random() * (canvas.height / box)) * box,
+    };
+    speed = 150;
+    score = 0;
+    scoreDisplay.textContent = score;
+    restartButton.style.display = "none";
 
-// Posición de la comida
-let food = {
-    x: Math.floor(Math.random() * (canvas.width / box)) * box,
-    y: Math.floor(Math.random() * (canvas.height / box)) * box,
-};
-
-// Variables de velocidad y puntaje
-let speed = 150;
-let score = 0;
-
-// Coordenadas para gestos táctiles
-let touchStartX = 0, touchStartY = 0;
-let touchEndX = 0, touchEndY = 0;
-
-// Habilitar sonido en móviles al primer toque
-function enableAudio() {
-    eatSound.play().catch(() => {});
-    gameOverSound.play().catch(() => {});
-    document.removeEventListener("click", enableAudio);
+    if (gameInterval) clearInterval(gameInterval);
+    gameInterval = setInterval(() => {
+        move();
+        draw();
+    }, speed);
 }
-document.addEventListener("click", enableAudio);
+
+initializeGame();
+
+// Cargar imágenes de la serpiente
+const headImg = new Image();
+headImg.src = "head.png";
+
+const bodyImg = new Image();
+bodyImg.src = "body.png";
 
 // Movimiento de la serpiente
 function move() {
     let newHead = { x: snake[0].x + dx, y: snake[0].y + dy };
 
-    // Verificar colisiones con paredes
+    // Verificar colisiones
     if (newHead.x < 0 || newHead.x >= canvas.width || newHead.y < 0 || newHead.y >= canvas.height) {
         gameOver();
         return;
     }
-
-    // Verificar colisión con sí misma
     for (let segment of snake) {
         if (newHead.x === segment.x && newHead.y === segment.y) {
             gameOver();
@@ -83,18 +90,22 @@ function move() {
 
 // Dibujar el juego
 function draw() {
-    ctx.fillStyle = "#282c34";
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     // Dibujar la serpiente
-    ctx.fillStyle = "lime";
-    for (let segment of snake) {
-        ctx.fillRect(segment.x, segment.y, box, box);
+    for (let i = 0; i < snake.length; i++) {
+        let segment = snake[i];
+
+        if (i === 0) {
+            ctx.drawImage(headImg, segment.x, segment.y, box, box);
+        } else {
+            ctx.drawImage(bodyImg, segment.x, segment.y, box, box);
+        }
     }
 
-    // Dibujar la comida
-    ctx.fillStyle = "red";
-    ctx.fillRect(food.x, food.y, box, box);
+    // Dibujar la comida (manzana)
+    const appleImage = document.getElementById("appleImage");
+    ctx.drawImage(appleImage, food.x, food.y, box, box);
 }
 
 // Control con teclado
@@ -114,57 +125,22 @@ document.addEventListener("keydown", (event) => {
     }
 });
 
-// Detectar gestos táctiles (para móviles)
-canvas.addEventListener("touchstart", (event) => {
-    event.preventDefault(); // Evita desplazamiento de la página
-    touchStartX = event.touches[0].clientX;
-    touchStartY = event.touches[0].clientY;
-});
-
-canvas.addEventListener("touchend", (event) => {
-    event.preventDefault();
-    touchEndX = event.changedTouches[0].clientX;
-    touchEndY = event.changedTouches[0].clientY;
-    handleSwipe();
-});
-
-function handleSwipe() {
-    let diffX = touchEndX - touchStartX;
-    let diffY = touchEndY - touchStartY;
-
-    if (Math.abs(diffX) > Math.abs(diffY)) {
-        if (diffX > 0 && dx === 0) {
-            dx = box;
-            dy = 0;
-        } else if (diffX < 0 && dx === 0) {
-            dx = -box;
-            dy = 0;
-        }
-    } else {
-        if (diffY > 0 && dy === 0) {
-            dx = 0;
-            dy = box;
-        } else if (diffY < 0 && dy === 0) {
-            dx = 0;
-            dy = -box;
-        }
-    }
-}
-
 // Función de Game Over
 function gameOver() {
+    clearInterval(gameInterval);
     gameOverSound.play();
-    setTimeout(() => {
-        alert(`Game Over\nPuntaje final: ${score}`);
-        document.location.reload();
-    }, 100);
+    alert("¡Game Over!");
+    restartButton.style.display = "block";
 }
 
-// Ejecutar el juego con velocidad variable
-function gameLoop() {
-    move();
-    draw();
-    setTimeout(gameLoop, speed);
+// Reiniciar el juego sin recargar la página
+function restartGame() {
+    initializeGame();
 }
 
-gameLoop();
+
+
+
+
+
+

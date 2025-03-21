@@ -3,18 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Snake Game</title>
+    <title>Juego de la Culebrita</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <h1>Juego de la Culebrita</h1>
     <p>Puntaje: <span id="score">0</span></p>
+    <button id="restartButton" onclick="restartGame()">Reiniciar Juego</button>
     <canvas id="gameCanvas"></canvas>
 
     <!-- Sonidos -->
     <audio id="eatSound" src="comer.mp3"></audio>
     <audio id="gameOverSound" src="gameover.mp3"></audio>
 
+    <!-- Imágenes -->
+    <img id="arbolesGif" src="arboles_en_movimiento.gif" alt="Arboles en movimiento">
+    <img id="appleImage" src="apple.png" alt="Manzana" style="display: none;">
+    
     <script src="script.js"></script>
 </body>
 </html>

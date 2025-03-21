@@ -4,14 +4,51 @@ body {
     color: white;
     font-family: Arial, sans-serif;
     margin: 0;
-    overflow: hidden; /* Evita scroll innecesario en móviles */
+    overflow: hidden;
+    position: relative;
 }
 
 canvas {
     border: 2px solid white;
-    touch-action: none; /* Evita zoom y desplazamientos accidentales */
+    touch-action: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 2;
 }
 
-p {
-    font-size: 20px;
+h1, p, button {
+    z-index: 3;
+    position: relative;
+    color: white;
 }
+
+#arbolesGif {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    object-fit: cover;
+    z-index: 1;
+}
+
+#appleImage {
+    width: 20px;
+    height: 20px;
+    position: absolute;
+}
+
+#restartButton {
+    display: none;
+    background-color: red;
+    color: white;
+    font-size: 18px;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
