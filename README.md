@@ -24,3 +24,6 @@ Restart the game if you lose and try to beat your high score.
 
 Screenshots
 ![Uploading image.png…]()
+
+Too play online
+https://isaiasdev-commits.github.io/juego-snake/
