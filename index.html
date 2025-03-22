@@ -10,16 +10,19 @@
     <h1>Juego de la Culebrita</h1>
     <p>Puntaje: <span id="score">0</span></p>
     <button id="restartButton" onclick="restartGame()">Reiniciar Juego</button>
-    <canvas id="gameCanvas"></canvas>
+
+    <div id="gameContainer">
+        <canvas id="gameCanvas"></canvas>
+        <img id="arbolesGif" src="arboles_en_movimiento.gif" alt="Árboles en movimiento">
+    </div>
 
     <!-- Sonidos -->
-    <audio id="eatSound" src="comer.mp3"></audio>
-    <audio id="gameOverSound" src="gameover.mp3"></audio>
+    <audio id="eatSound" src="comer.mp3" preload="auto"></audio>
+    <audio id="gameOverSound" src="gameover.mp3" preload="auto"></audio>
 
-    <!-- Imágenes -->
-    <img id="arbolesGif" src="arboles_en_movimiento.gif" alt="Arboles en movimiento">
+    <!-- Imágenes ocultas para la comida -->
     <img id="appleImage" src="apple.png" alt="Manzana" style="display: none;">
-    
+
     <script src="script.js"></script>
 </body>
 </html>
