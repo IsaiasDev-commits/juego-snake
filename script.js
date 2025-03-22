@@ -51,12 +51,22 @@ function initializeGame() {
     }, 150);
 }
 
-// Generar comida en una posición aleatoria
+// Generar comida en una posición válida
 function generateFood() {
-    return {
-        x: Math.floor(Math.random() * (canvas.width / box)) * box,
-        y: Math.floor(Math.random() * (canvas.height / box)) * box,
-    };
+    let newFood;
+    let validPosition = false;
+
+    while (!validPosition) {
+        newFood = {
+            x: Math.floor(Math.random() * (canvas.width / box)) * box,
+            y: Math.floor(Math.random() * (canvas.height / box)) * box,
+        };
+
+        // Verificar que la comida no aparezca sobre la serpiente
+        validPosition = !snake.some(segment => segment.x === newFood.x && segment.y === newFood.y);
+    }
+
+    return newFood;
 }
 
 // Mover la serpiente
