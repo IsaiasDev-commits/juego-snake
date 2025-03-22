@@ -39,10 +39,11 @@ function initializeGame() {
     snake = [{ x: box * 5, y: box * 5 }];
     dx = box;
     dy = 0;
-    food = generateFood();
     score = 0;
     scoreDisplay.textContent = score;
     restartButton.style.display = "none";
+
+    food = generateFood(); // Generar comida después de redimensionar
 
     if (gameInterval) clearInterval(gameInterval);
     gameInterval = setInterval(() => {
@@ -51,20 +52,24 @@ function initializeGame() {
     }, 150);
 }
 
-// Generar comida en una posición válida
+// Generar comida en una posición válida dentro del canvas
 function generateFood() {
     let newFood;
     let validPosition = false;
-
+    
     while (!validPosition) {
         newFood = {
             x: Math.floor(Math.random() * (canvas.width / box)) * box,
             y: Math.floor(Math.random() * (canvas.height / box)) * box,
         };
 
-        // Verificar que la comida no aparezca sobre la serpiente
-        validPosition = !snake.some(segment => segment.x === newFood.x && segment.y === newFood.y);
+        // Asegurar que la comida no se genere fuera del área visible
+        if (newFood.x >= 0 && newFood.x < canvas.width && newFood.y >= 0 && newFood.y < canvas.height) {
+            validPosition = !snake.some(segment => segment.x === newFood.x && segment.y === newFood.y);
+        }
     }
+
+    console.log("Comida generada en:", newFood); // Para depurar
 
     return newFood;
 }
