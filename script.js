@@ -3,14 +3,14 @@ const ctx = canvas.getContext("2d");
 const scoreDisplay = document.getElementById("score");
 const restartButton = document.getElementById("restartButton");
 
-// Sonidos
+
 const eatSound = document.getElementById("eatSound");
 const gameOverSound = document.getElementById("gameOverSound");
 
-// Tamaño de cada celda
+
 const box = 20;
 
-// Ajustar el tamaño del canvas asegurando que sea un múltiplo de `box`
+
 function resizeCanvas() {
     canvas.width = Math.floor(window.innerWidth / box) * box;
     canvas.height = Math.floor(window.innerHeight / box) * box;
@@ -26,16 +26,16 @@ let food;
 let score;
 let gameInterval;
 
-// Cargar imágenes de la serpiente
+
 const headImg = new Image();
 headImg.src = "head.png";
 
 const bodyImg = new Image();
 bodyImg.src = "body.png";
 
-// Inicializar el juego
+
 function initializeGame() {
-    resizeCanvas(); // Asegurar que el canvas esté bien ajustado
+    resizeCanvas(); 
     snake = [{ x: box * 5, y: box * 5 }];
     dx = box;
     dy = 0;
@@ -43,7 +43,7 @@ function initializeGame() {
     scoreDisplay.textContent = score;
     restartButton.style.display = "none";
 
-    food = generateFood(); // Generar comida después de redimensionar
+    food = generateFood(); // 
 
     if (gameInterval) clearInterval(gameInterval);
     gameInterval = setInterval(() => {
@@ -52,7 +52,7 @@ function initializeGame() {
     }, 150);
 }
 
-// Generar comida en una posición válida dentro del canvas
+// Generar comida en una posición válida 
 function generateFood() {
     let newFood;
     let validPosition = false;
@@ -63,13 +63,13 @@ function generateFood() {
             y: Math.floor(Math.random() * (canvas.height / box)) * box,
         };
 
-        // Asegurar que la comida no se genere fuera del área visible
+        
         if (newFood.x >= 0 && newFood.x < canvas.width && newFood.y >= 0 && newFood.y < canvas.height) {
             validPosition = !snake.some(segment => segment.x === newFood.x && segment.y === newFood.y);
         }
     }
 
-    console.log("Comida generada en:", newFood); // Para depurar
+    console.log("Comida generada en:", newFood); 
 
     return newFood;
 }
@@ -78,7 +78,7 @@ function generateFood() {
 function move() {
     let newHead = { x: snake[0].x + dx, y: snake[0].y + dy };
 
-    // Verificar colisión con paredes o cuerpo
+    // Verificar colisión con paredes o con su cuerpo
     if (
         newHead.x < 0 || newHead.x >= canvas.width ||
         newHead.y < 0 || newHead.y >= canvas.height ||
@@ -90,7 +90,7 @@ function move() {
 
     snake.unshift(newHead);
 
-    // Verificar si comió la comida
+    // Verificar que comio
     if (newHead.x === food.x && newHead.y === food.y) {
         eatSound.play();
         score += 10;
@@ -101,11 +101,11 @@ function move() {
     }
 }
 
-// Dibujar el juego
+
 function draw() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    // Dibujar la serpiente
+    
     for (let i = 0; i < snake.length; i++) {
         let segment = snake[i];
         if (i === 0) {
@@ -120,7 +120,7 @@ function draw() {
     ctx.drawImage(appleImage, food.x, food.y, box, box);
 }
 
-// Control con teclado
+// Controles de teclado
 document.addEventListener("keydown", (event) => {
     if ((event.key === "w" || event.key === "ArrowUp") && dy === 0) {
         dx = 0;
@@ -137,7 +137,7 @@ document.addEventListener("keydown", (event) => {
     }
 });
 
-// Control táctil para móviles
+// Control para moviles
 let touchStartX = 0, touchStartY = 0;
 document.addEventListener("touchstart", (e) => {
     touchStartX = e.touches[0].clientX;
@@ -171,7 +171,7 @@ document.addEventListener("touchmove", (e) => {
     }
 });
 
-// Función de Game Over
+// Función de juego terminado
 function gameOver() {
     clearInterval(gameInterval);
     gameOverSound.play();
@@ -179,12 +179,12 @@ function gameOver() {
     restartButton.style.display = "block";
 }
 
-// Reiniciar el juego sin recargar la página
+// Reiniciar juego
 function restartGame() {
     initializeGame();
 }
 
-// Iniciar el juego
+// Inicio de juego
 initializeGame();
 
 
