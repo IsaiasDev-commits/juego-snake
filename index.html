@@ -3,25 +3,60 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Juego de la Culebrita</title>
+    <title>Snake Game | </title>
     <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 </head>
 <body>
-    <h1>Juego de la Culebrita</h1>
-    <p>Puntaje: <span id="score">0</span></p>
-    <button id="restartButton" onclick="restartGame()">Reiniciar Juego</button>
+    <div class="container">
+        <header>
+            <h1>Snake Adventure</h1>
+            <div class="score-board">
+                <p>Puntaje: <span id="score">0</span></p>
+                <p>Record: <span id="highScore">0</span></p>
+            </div>
+        </header>
 
-    <div id="gameContainer">
-        <canvas id="gameCanvas"></canvas>
-        <img id="arbolesGif" src="arboles_en_movimiento.gif" alt="Árboles en movimiento">
+        <div id="gameContainer">
+            <div id="gameOverlay">
+                <div id="startScreen" class="screen">
+                    <h2>Snake Adventure</h2>
+                    <p>Usa las flechas o WASD para mover la serpiente</p>
+                    <button id="startButton" class="btn">Comenzar Juego</button>
+                    <div class="controls">
+                        <p>Controles móvil: Desliza para mover</p>
+                    </div>
+                </div>
+                <div id="pauseScreen" class="screen hidden">
+                    <h2>Juego Pausado</h2>
+                    <button id="resumeButton" class="btn">Continuar</button>
+                </div>
+                <div id="gameOverScreen" class="screen hidden">
+                    <h2>¡Game Over!</h2>
+                    <p>Puntaje: <span id="finalScore">0</span></p>
+                    <button id="restartButton" class="btn">Jugar de Nuevo</button>
+                </div>
+            </div>
+            
+            <canvas id="gameCanvas"></canvas>
+            <div id="background"></div>
+        </div>
+
+        <div class="game-controls">
+            <button id="pauseButton" class="icon-btn hidden" aria-label="Pausar juego">⏸️</button>
+        </div>
     </div>
 
     
+    <div class="hidden">
+        <img id="appleImage" src="apple.png" alt="Manzana">
+        <img id="headImage" src="head.png" alt="Cabeza de serpiente">
+        <img id="bodyImage" src="body.png" alt="Cuerpo de serpiente">
+    </div>
+    
     <audio id="eatSound" src="comer.mp3" preload="auto"></audio>
     <audio id="gameOverSound" src="gameover.mp3" preload="auto"></audio>
-
-    
-    <img id="appleImage" src="apple.png" alt="Manzana" style="display: none;">
+    <audio id="backgroundMusic" loop src="music.mp3" preload="auto"></audio>
 
     <script src="script.js"></script>
 </body>
