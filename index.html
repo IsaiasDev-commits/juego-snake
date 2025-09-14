@@ -2,10 +2,206 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Snake Game | </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Snake Adventure | Juego de Serpiente</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <style>
+        /* Estilos adicionales para móviles */
+        .mobile-controls {
+            display: none;
+            position: fixed;
+            bottom: 20px;
+            left: 0;
+            right: 0;
+            z-index: 20;
+            padding: 10px;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .direction-buttons {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(3, 1fr);
+            gap: 5px;
+            margin: 0 auto;
+        }
+        
+        .control-btn {
+            width: 60px;
+            height: 60px;
+            background: rgba(255, 221, 64, 0.7);
+            border: 2px solid #ff9900;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+            color: #000;
+            touch-action: manipulation;
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        .control-btn:active {
+            background: rgba(255, 221, 64, 1);
+            transform: scale(0.95);
+        }
+        
+        .center-btn {
+            grid-column: 2;
+            grid-row: 2;
+            visibility: hidden;
+        }
+        
+        .up-btn {
+            grid-column: 2;
+            grid-row: 1;
+        }
+        
+        .left-btn {
+            grid-column: 1;
+            grid-row: 2;
+        }
+        
+        .right-btn {
+            grid-column: 3;
+            grid-row: 2;
+        }
+        
+        .down-btn {
+            grid-column: 2;
+            grid-row: 3;
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 20px;
+            margin-top: 10px;
+        }
+        
+        .action-btn {
+            width: 70px;
+            height: 70px;
+            background: rgba(255, 87, 34, 0.7);
+            border: 2px solid #c53b13;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            color: white;
+        }
+        
+        .action-btn:active {
+            background: rgba(255, 87, 34, 1);
+            transform: scale(0.95);
+        }
+        
+        .high-score-table {
+            margin-top: 20px;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 15px;
+            border-radius: 10px;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        
+        .high-score-table h3 {
+            margin-bottom: 10px;
+            font-size: 14px;
+            color: #ffdd40;
+        }
+        
+        .high-score-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 5px 0;
+            border-bottom: 1px solid #333;
+            font-size: 12px;
+        }
+        
+        
+        @media (max-width: 768px) {
+            .mobile-controls {
+                display: flex;
+            }
+            
+            header {
+                flex-direction: column;
+                text-align: center;
+                padding: 10px;
+            }
+            
+            h1 {
+                font-size: 1.2rem;
+                margin-bottom: 10px;
+            }
+            
+            .score-board {
+                width: 100%;
+                justify-content: space-around;
+            }
+            
+            .game-controls {
+                bottom: 150px;
+                right: 20px;
+            }
+            
+            .icon-btn {
+                width: 45px;
+                height: 45px;
+                font-size: 1rem;
+            }
+            
+            .screen {
+                padding: 20px 15px;
+            }
+            
+            .screen h2 {
+                font-size: 1.2rem;
+            }
+            
+            .btn {
+                padding: 10px 15px;
+                font-size: 0.8rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .control-btn {
+                width: 50px;
+                height: 50px;
+                font-size: 16px;
+            }
+            
+            .action-btn {
+                width: 60px;
+                height: 60px;
+                font-size: 20px;
+            }
+            
+            .container {
+                padding: 5px;
+            }
+        }
+        
+        /* Efectos de vibración para feedback táctil */
+        @keyframes vibrate {
+            0% { transform: translate(0); }
+            20% { transform: translate(-2px, 2px); }
+            40% { transform: translate(-2px, -2px); }
+            60% { transform: translate(2px, 2px); }
+            80% { transform: translate(2px, -2px); }
+            100% { transform: translate(0); }
+        }
+        
+        .vibrate {
+            animation: vibrate 0.3s linear;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
@@ -23,8 +219,14 @@
                     <h2>Snake Adventure</h2>
                     <p>Usa las flechas o WASD para mover la serpiente</p>
                     <button id="startButton" class="btn">Comenzar Juego</button>
+                    
+                    <div class="high-score-table">
+                        <h3>Mejores Puntuaciones</h3>
+                        <div id="highScoreList"></div>
+                    </div>
+                    
                     <div class="controls">
-                        <p>Controles móvil: Desliza para mover</p>
+                        <p>Controles móvil: Desliza o usa botones</p>
                     </div>
                 </div>
                 <div id="pauseScreen" class="screen hidden">
@@ -34,6 +236,10 @@
                 <div id="gameOverScreen" class="screen hidden">
                     <h2>¡Game Over!</h2>
                     <p>Puntaje: <span id="finalScore">0</span></p>
+                    <div class="high-score-table">
+                        <h3>Mejores Puntuaciones</h3>
+                        <div id="finalHighScoreList"></div>
+                    </div>
                     <button id="restartButton" class="btn">Jugar de Nuevo</button>
                 </div>
             </div>
@@ -45,19 +251,567 @@
         <div class="game-controls">
             <button id="pauseButton" class="icon-btn hidden" aria-label="Pausar juego">⏸️</button>
         </div>
+        
+        <!-- Controles móviles -->
+        <div class="mobile-controls">
+            <div class="direction-buttons">
+                <div class="center-btn"></div>
+                <button class="control-btn up-btn" id="upButton">↑</button>
+                <button class="control-btn left-btn" id="leftButton">←</button>
+                <button class="control-btn right-btn" id="rightButton">→</button>
+                <button class="control-btn down-btn" id="downButton">↓</button>
+            </div>
+            <div class="action-buttons">
+                <button class="action-btn" id="actionPause">⏸️</button>
+                <button class="action-btn" id="actionRestart">↻</button>
+            </div>
+        </div>
     </div>
 
-    
+    <!-- Imágenes precargadas -->
     <div class="hidden">
         <img id="appleImage" src="apple.png" alt="Manzana">
         <img id="headImage" src="head.png" alt="Cabeza de serpiente">
         <img id="bodyImage" src="body.png" alt="Cuerpo de serpiente">
     </div>
     
+    <!-- Sonidos -->
     <audio id="eatSound" src="comer.mp3" preload="auto"></audio>
     <audio id="gameOverSound" src="gameover.mp3" preload="auto"></audio>
     <audio id="backgroundMusic" loop src="music.mp3" preload="auto"></audio>
 
-    <script src="script.js"></script>
+    <script>
+        class SnakeGame {
+            constructor() {
+                this.canvas = document.getElementById("gameCanvas");
+                this.ctx = this.canvas.getContext("2d");
+                this.scoreDisplay = document.getElementById("score");
+                this.highScoreDisplay = document.getElementById("highScore");
+                this.finalScoreDisplay = document.getElementById("finalScore");
+                this.highScoreList = document.getElementById("highScoreList");
+                this.finalHighScoreList = document.getElementById("finalHighScoreList");
+                
+                
+                this.startScreen = document.getElementById("startScreen");
+                this.pauseScreen = document.getElementById("pauseScreen");
+                this.gameOverScreen = document.getElementById("gameOverScreen");
+                
+                
+                this.startButton = document.getElementById("startButton");
+                this.restartButton = document.getElementById("restartButton");
+                this.resumeButton = document.getElementById("resumeButton");
+                this.pauseButton = document.getElementById("pauseButton");
+                
+                
+                this.upButton = document.getElementById("upButton");
+                this.leftButton = document.getElementById("leftButton");
+                this.rightButton = document.getElementById("rightButton");
+                this.downButton = document.getElementById("downButton");
+                this.actionPause = document.getElementById("actionPause");
+                this.actionRestart = document.getElementById("actionRestart");
+                
+                
+                this.eatSound = document.getElementById("eatSound");
+                this.gameOverSound = document.getElementById("gameOverSound");
+                this.backgroundMusic = document.getElementById("backgroundMusic");
+                
+                
+                this.headImg = document.getElementById("headImage");
+                this.bodyImg = document.getElementById("bodyImage");
+                this.appleImage = document.getElementById("appleImage");
+                
+                
+                this.box = 20;
+                this.snake = [];
+                this.dx = 0;
+                this.dy = 0;
+                this.food = {};
+                this.score = 0;
+                this.highScores = JSON.parse(localStorage.getItem('snakeHighScores')) || [];
+                this.highScore = this.highScores.length > 0 ? Math.max(...this.highScores) : 0;
+                this.gameInterval = null;
+                this.isPaused = false;
+                this.gameStarted = false;
+                this.touchStartX = 0;
+                this.touchStartY = 0;
+                
+                
+                this.init();
+            }
+            
+            init() {
+                
+                this.resizeCanvas();
+                window.addEventListener("resize", () => this.resizeCanvas());
+                
+                
+                this.highScoreDisplay.textContent = this.highScore;
+                this.updateHighScoreLists();
+                
+                
+                this.startButton.addEventListener("click", () => this.startGame());
+                this.restartButton.addEventListener("click", () => this.startGame());
+                this.resumeButton.addEventListener("click", () => this.togglePause());
+                this.pauseButton.addEventListener("click", () => this.togglePause());
+                this.actionPause.addEventListener("click", () => this.togglePause());
+                this.actionRestart.addEventListener("click", () => this.startGame());
+                
+                
+                this.upButton.addEventListener("click", () => this.handleDirectionButton('up'));
+                this.leftButton.addEventListener("click", () => this.handleDirectionButton('left'));
+                this.rightButton.addEventListener("click", () => this.handleDirectionButton('right'));
+                this.downButton.addEventListener("click", () => this.handleDirectionButton('down'));
+                
+                
+                document.addEventListener("keydown", (e) => this.handleKeyDown(e));
+                document.addEventListener("touchstart", (e) => this.handleTouchStart(e), { passive: false });
+                document.addEventListener("touchmove", (e) => this.handleTouchMove(e), { passive: false });
+                
+                
+                this.preloadResources();
+                
+                
+                this.drawStartScreen();
+            }
+            
+            preloadResources() {
+                const resources = [this.headImg, this.bodyImg, this.appleImage];
+                let loaded = 0;
+                
+                resources.forEach(resource => {
+                    if (resource.complete) {
+                        loaded++;
+                    } else {
+                        resource.onload = () => {
+                            loaded++;
+                            if (loaded === resources.length) {
+                                console.log("Todos los recursos cargados");
+                            }
+                        };
+                        resource.onerror = () => {
+                            console.error("Error cargando recurso: ", resource.src);
+                            this.useFallbackGraphics = true;
+                        };
+                    }
+                });
+                
+                [this.eatSound, this.gameOverSound, this.backgroundMusic].forEach(audio => {
+                    audio.onerror = () => {
+                        console.error("Error cargando audio: ", audio.src);
+                    };
+                });
+            }
+            
+            resizeCanvas() {
+                
+                const maxWidth = Math.min(600, window.innerWidth - 40);
+                const maxHeight = Math.min(600, window.innerHeight - 200);
+                
+                const width = Math.floor(maxWidth / this.box) * this.box;
+                const height = Math.floor(maxHeight / this.box) * this.box;
+                
+                this.canvas.width = width;
+                this.canvas.height = height;
+                
+                if (this.gameStarted && !this.isPaused) {
+                    this.food = this.generateFood();
+                }
+            }
+            
+            drawStartScreen() {
+                this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+                
+                
+                this.ctx.fillStyle = '#ffdd40';
+                this.ctx.font = '24px "Press Start 2P", cursive';
+                this.ctx.textAlign = 'center';
+                this.ctx.fillText('Snake Adventure', this.canvas.width / 2, this.canvas.height / 3);
+                
+                
+                this.ctx.fillStyle = '#ffffff';
+                this.ctx.font = '12px "Press Start 2P", cursive';
+                this.ctx.fillText('Usa las flechas o WASD para mover', this.canvas.width / 2, this.canvas.height / 2);
+                this.ctx.fillText('Presiona P para pausar', this.canvas.width / 2, this.canvas.height / 2 + 30);
+                
+                
+                this.ctx.fillStyle = '#4caf50';
+                for (let i = 0; i < 5; i++) {
+                    if (i === 0) {
+                        this.ctx.fillStyle = '#ff5722';
+                    } else {
+                        this.ctx.fillStyle = '#4caf50';
+                    }
+                    this.ctx.fillRect(this.canvas.width / 2 - 40 + i * 20, this.canvas.height * 2/3, 18, 18);
+                }
+                
+                
+                this.ctx.drawImage(this.appleImage, this.canvas.width / 2 + 30, this.canvas.height * 2/3, 18, 18);
+            }
+            
+            startGame() {
+                
+                this.startScreen.classList.add('hidden');
+                this.gameOverScreen.classList.add('hidden');
+                this.pauseScreen.classList.add('hidden');
+                
+                
+                this.pauseButton.classList.remove('hidden');
+                
+                
+                this.snake = [{ x: this.box * 5, y: this.box * 5 }];
+                this.dx = this.box;
+                this.dy = 0;
+                this.score = 0;
+                this.scoreDisplay.textContent = this.score;
+                this.isPaused = false;
+                this.gameStarted = true;
+                
+                
+                this.food = this.generateFood();
+                
+                
+                if (this.gameInterval) {
+                    clearInterval(this.gameInterval);
+                }
+                
+                
+                this.gameInterval = setInterval(() => this.gameLoop(), 150);
+                
+                
+                try {
+                    this.backgroundMusic.currentTime = 0;
+                    this.backgroundMusic.play().catch(e => {
+                        console.log("Reproducción automática de audio bloqueada:", e);
+                    });
+                } catch (error) {
+                    console.error("Error con la música de fondo:", error);
+                }
+            }
+            
+            generateFood() {
+                let newFood;
+                let validPosition = false;
+                let attempts = 0;
+                const maxAttempts = 100; 
+                
+                while (!validPosition && attempts < maxAttempts) {
+                    const x = Math.floor(Math.random() * (this.canvas.width / this.box)) * this.box;
+                    const y = Math.floor(Math.random() * (this.canvas.height / this.box)) * this.box;
+                    
+                    newFood = { x, y };
+                    
+                    
+                    validPosition = !this.snake.some(segment => segment.x === x && segment.y === y);
+                    attempts++;
+                }
+                
+                return newFood;
+            }
+            
+            gameLoop() {
+                if (this.isPaused) return;
+                
+                this.moveSnake();
+                this.checkCollision();
+                this.draw();
+            }
+            
+            moveSnake() {
+                const head = { x: this.snake[0].x + this.dx, y: this.snake[0].y + this.dy };
+                this.snake.unshift(head);
+                
+                
+                if (head.x === this.food.x && head.y === this.food.y) {
+                    this.score += 10;
+                    this.scoreDisplay.textContent = this.score;
+                    
+                    
+                    try {
+                        this.eatSound.currentTime = 0;
+                        this.eatSound.play().catch(e => console.log("Error reproduciendo sonido:", e));
+                    } catch (error) {
+                        console.error("Error con el sonido:", error);
+                    }
+                    
+                    
+                    this.food = this.generateFood();
+                } else {
+                    this.snake.pop();
+                }
+            }
+            
+            checkCollision() {
+                const head = this.snake[0];
+                
+                
+                if (
+                    head.x < 0 || 
+                    head.y < 0 || 
+                    head.x >= this.canvas.width || 
+                    head.y >= this.canvas.height
+                ) {
+                    this.gameOver();
+                    return;
+                }
+                
+                
+                for (let i = 1; i < this.snake.length; i++) {
+                    if (head.x === this.snake[i].x && head.y === this.snake[i].y) {
+                        this.gameOver();
+                        return;
+                    }
+                }
+            }
+            
+            draw() {
+                
+                this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+                
+                
+                this.snake.forEach((segment, index) => {
+                    if (index === 0) {
+                        
+                        if (this.headImg.complete && !this.useFallbackGraphics) {
+                            this.ctx.drawImage(this.headImg, segment.x, segment.y, this.box, this.box);
+                        } else {
+                            this.ctx.fillStyle = '#ff5722';
+                            this.ctx.fillRect(segment.x, segment.y, this.box, this.box);
+                        }
+                    } else {
+                        
+                        if (this.bodyImg.complete && !this.useFallbackGraphics) {
+                            this.ctx.drawImage(this.bodyImg, segment.x, segment.y, this.box, this.box);
+                        } else {
+                            this.ctx.fillStyle = '#4caf50';
+                            this.ctx.fillRect(segment.x, segment.y, this.box, this.box);
+                        }
+                    }
+                });
+                
+                
+                if (this.appleImage.complete && !this.useFallbackGraphics) {
+                    this.ctx.drawImage(this.appleImage, this.food.x, this.food.y, this.box, this.box);
+                } else {
+                    this.ctx.fillStyle = '#ff0000';
+                    this.ctx.fillRect(this.food.x, this.food.y, this.box, this.box);
+                }
+            }
+            
+            gameOver() {
+                clearInterval(this.gameInterval);
+                this.gameStarted = false;
+                
+                
+                this.pauseButton.classList.add('hidden');
+                
+                
+                this.gameOverScreen.classList.remove('hidden');
+                this.finalScoreDisplay.textContent = this.score;
+                
+                
+                if (this.score > this.highScore) {
+                    this.highScore = this.score;
+                    this.highScoreDisplay.textContent = this.highScore;
+                }
+                
+                
+                this.saveScore(this.score);
+                this.updateHighScoreLists();
+                
+                
+                try {
+                    this.gameOverSound.currentTime = 0;
+                    this.gameOverSound.play().catch(e => console.log("Error reproduciendo sonido:", e));
+                } catch (error) {
+                    console.error("Error con el sonido:", error);
+                }
+                
+                
+                this.backgroundMusic.pause();
+            }
+            
+            togglePause() {
+                this.isPaused = !this.isPaused;
+                
+                if (this.isPaused) {
+                    this.pauseScreen.classList.remove('hidden');
+                    this.backgroundMusic.pause();
+                } else {
+                    this.pauseScreen.classList.add('hidden');
+                    try {
+                        this.backgroundMusic.play().catch(e => console.log("Error reanudando música:", e));
+                    } catch (error) {
+                        console.error("Error con la música:", error);
+                    }
+                }
+            }
+            
+            handleKeyDown(e) {
+                if (!this.gameStarted || this.isPaused) return;
+                
+                
+                if ([37, 38, 39, 40, 65, 87, 68, 83].includes(e.keyCode)) {
+                    e.preventDefault();
+                }
+                
+                switch (e.keyCode) {
+                    case 37: 
+                    case 65: 
+                        if (this.dx === 0) {
+                            this.dx = -this.box;
+                            this.dy = 0;
+                        }
+                        break;
+                    case 38: 
+                    case 87: 
+                        if (this.dy === 0) {
+                            this.dx = 0;
+                            this.dy = -this.box;
+                        }
+                        break;
+                    case 39: 
+                    case 68: 
+                        if (this.dx === 0) {
+                            this.dx = this.box;
+                            this.dy = 0;
+                        }
+                        break;
+                    case 40: 
+                    case 83: 
+                        if (this.dy === 0) {
+                            this.dx = 0;
+                            this.dy = this.box;
+                        }
+                        break;
+                    case 80: // P - Pausa
+                        this.togglePause();
+                        break;
+                }
+            }
+            
+            handleDirectionButton(direction) {
+                if (!this.gameStarted || this.isPaused) return;
+                
+                switch (direction) {
+                    case 'left':
+                        if (this.dx === 0) {
+                            this.dx = -this.box;
+                            this.dy = 0;
+                        }
+                        break;
+                    case 'up':
+                        if (this.dy === 0) {
+                            this.dx = 0;
+                            this.dy = -this.box;
+                        }
+                        break;
+                    case 'right':
+                        if (this.dx === 0) {
+                            this.dx = this.box;
+                            this.dy = 0;
+                        }
+                        break;
+                    case 'down':
+                        if (this.dy === 0) {
+                            this.dx = 0;
+                            this.dy = this.box;
+                        }
+                        break;
+                }
+                
+                
+                event.target.classList.add('vibrate');
+                setTimeout(() => {
+                    event.target.classList.remove('vibrate');
+                }, 300);
+            }
+            
+            handleTouchStart(e) {
+                this.touchStartX = e.touches[0].clientX;
+                this.touchStartY = e.touches[0].clientY;
+                
+                
+                if (this.gameStarted && !this.isPaused) {
+                    e.preventDefault();
+                }
+            }
+            
+            handleTouchMove(e) {
+                if (!this.gameStarted || this.isPaused) return;
+                
+                e.preventDefault();
+                
+                const touchEndX = e.touches[0].clientX;
+                const touchEndY = e.touches[0].clientY;
+                
+                const dx = touchEndX - this.touchStartX;
+                const dy = touchEndY - this.touchStartY;
+                
+                
+                if (Math.abs(dx) > Math.abs(dy)) {
+                    if (dx > 0 && this.dx === 0) {
+                        
+                        this.dx = this.box;
+                        this.dy = 0;
+                    } else if (dx < 0 && this.dx === 0) {
+                        
+                        this.dx = -this.box;
+                        this.dy = 0;
+                    }
+                } else {
+                    if (dy > 0 && this.dy === 0) {
+                       
+                        this.dx = 0;
+                        this.dy = this.box;
+                    } else if (dy < 0 && this.dy === 0) {
+                        
+                        this.dx = 0;
+                        this.dy = -this.box;
+                    }
+                }
+                
+                
+                this.touchStartX = touchEndX;
+                this.touchStartY = touchEndY;
+            }
+            
+            saveScore(score) {
+                
+                this.highScores.push(score);
+                
+                
+                this.highScores.sort((a, b) => b - a);
+                this.highScores = this.highScores.slice(0, 10);
+                
+                
+                localStorage.setItem('snakeHighScores', JSON.stringify(this.highScores));
+            }
+            
+            updateHighScoreLists() {
+                // Actualizar lista de records en pantalla de inicio
+                this.highScoreList.innerHTML = '';
+                this.highScores.forEach((score, index) => {
+                    const scoreItem = document.createElement('div');
+                    scoreItem.className = 'high-score-item';
+                    scoreItem.innerHTML = `<span>${index + 1}.</span><span>${score}</span>`;
+                    this.highScoreList.appendChild(scoreItem);
+                });
+                
+                // Actualizar lista de records en pantalla 
+                this.finalHighScoreList.innerHTML = '';
+                this.highScores.forEach((score, index) => {
+                    const scoreItem = document.createElement('div');
+                    scoreItem.className = 'high-score-item';
+                    scoreItem.innerHTML = `<span>${index + 1}.</span><span>${score}</span>`;
+                    this.finalHighScoreList.appendChild(scoreItem);
+                });
+            }
+        }
+        
+        // Iniciar el juego 
+        window.addEventListener('load', () => {
+            const game = new SnakeGame();
+        });
+    </script>
 </body>
 </html>
