@@ -20,18 +20,18 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            overflow: hidden;
+            overflow-x: hidden;
+            padding: 20px;
         }
         
         .container {
             width: 100%;
             max-width: 800px;
-            padding: 20px;
             z-index: 10;
             position: relative;
         }
         
-        /* Fondo animado con CSS puro */
+        /* Fondo animado con CSS puro - optimizado para móviles */
         .background-animation {
             position: fixed;
             top: 0;
@@ -40,6 +40,7 @@
             height: 100%;
             z-index: -1;
             overflow: hidden;
+            pointer-events: none;
         }
         
         .bg-circle {
@@ -50,35 +51,35 @@
         }
         
         .bg-circle:nth-child(1) {
-            width: 80px;
-            height: 80px;
+            width: 60px;
+            height: 60px;
             top: 10%;
             left: 10%;
             animation-delay: 0s;
-            animation-duration: 25s;
-        }
-        
-        .bg-circle:nth-child(2) {
-            width: 60px;
-            height: 60px;
-            top: 20%;
-            left: 80%;
-            animation-delay: 2s;
             animation-duration: 20s;
         }
         
+        .bg-circle:nth-child(2) {
+            width: 40px;
+            height: 40px;
+            top: 20%;
+            left: 80%;
+            animation-delay: 2s;
+            animation-duration: 15s;
+        }
+        
         .bg-circle:nth-child(3) {
-            width: 100px;
-            height: 100px;
+            width: 70px;
+            height: 70px;
             top: 70%;
             left: 25%;
             animation-delay: 4s;
-            animation-duration: 30s;
+            animation-duration: 25s;
         }
         
         .bg-circle:nth-child(4) {
-            width: 50px;
-            height: 50px;
+            width: 30px;
+            height: 30px;
             top: 50%;
             left: 90%;
             animation-delay: 6s;
@@ -86,8 +87,8 @@
         }
         
         .bg-circle:nth-child(5) {
-            width: 70px;
-            height: 70px;
+            width: 50px;
+            height: 50px;
             top: 80%;
             left: 70%;
             animation-delay: 8s;
@@ -103,7 +104,7 @@
                 opacity: 0.7;
             }
             100% {
-                transform: translateY(-1000px) rotate(720deg);
+                transform: translateY(-100vh) rotate(720deg);
                 opacity: 0;
             }
         }
@@ -128,18 +129,18 @@
         }
         
         h1 {
-            font-size: 1.8rem;
+            font-size: 1.5rem;
             text-shadow: 3px 3px 0 #000;
-            margin-right: 20px;
+            margin-right: 15px;
         }
         
         .score-board {
             display: flex;
-            gap: 20px;
+            gap: 15px;
         }
         
         .score-board p {
-            font-size: 0.9rem;
+            font-size: 0.8rem;
             background: rgba(0, 0, 0, 0.5);
             padding: 8px 12px;
             border-radius: 5px;
@@ -196,8 +197,8 @@
         }
         
         .screen {
-            background: rgba(0, 0, 0, 0.85);
-            padding: 30px;
+            background: rgba(0, 0, 0, 0.9);
+            padding: 25px;
             border-radius: 15px;
             text-align: center;
             border: 3px solid #ffdd40;
@@ -211,16 +212,16 @@
         }
         
         .screen h2 {
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             color: #ffdd40;
-            font-size: 1.8rem;
+            font-size: 1.5rem;
             text-shadow: 2px 2px 0 #000;
         }
         
         .screen p {
-            margin: 15px 0;
+            margin: 12px 0;
             line-height: 1.5;
-            font-size: 0.9rem;
+            font-size: 0.8rem;
         }
         
         .btn {
@@ -229,10 +230,10 @@
             border: none;
             padding: 12px 25px;
             font-family: 'Press Start 2P', cursive;
-            font-size: 0.9rem;
+            font-size: 0.8rem;
             border-radius: 5px;
             cursor: pointer;
-            margin: 15px 0;
+            margin: 12px 0;
             transition: all 0.2s;
             position: relative;
             overflow: hidden;
@@ -247,25 +248,9 @@
             transform: translateY(0);
         }
         
-        .btn::after {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: rgba(255, 255, 255, 0.1);
-            transform: rotate(30deg);
-            transition: all 0.3s;
-        }
-        
-        .btn:hover::after {
-            transform: rotate(30deg) translate(10px, 10px);
-        }
-        
         .controls {
-            margin-top: 20px;
-            font-size: 0.7rem;
+            margin-top: 15px;
+            font-size: 0.6rem;
             color: #aaa;
         }
         
@@ -275,8 +260,8 @@
         
         .game-controls {
             position: absolute;
-            bottom: 30px;
-            right: 30px;
+            bottom: 20px;
+            right: 20px;
             z-index: 10;
         }
         
@@ -285,9 +270,9 @@
             color: white;
             border: 2px solid #ffdd40;
             border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            font-size: 1.2rem;
+            width: 45px;
+            height: 45px;
+            font-size: 1rem;
             cursor: pointer;
             transition: all 0.2s;
         }
@@ -296,15 +281,95 @@
             background: rgba(255, 221, 64, 0.2);
         }
         
+        /* Controles móviles */
+        .mobile-controls {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .direction-buttons {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(3, 1fr);
+            gap: 5px;
+        }
+        
+        .control-btn {
+            width: 50px;
+            height: 50px;
+            background: rgba(255, 221, 64, 0.7);
+            border: 2px solid #ff9900;
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 18px;
+            color: #000;
+            touch-action: manipulation;
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        .control-btn:active {
+            background: rgba(255, 221, 64, 1);
+            transform: scale(0.95);
+        }
+        
+        .up-btn {
+            grid-column: 2;
+            grid-row: 1;
+        }
+        
+        .left-btn {
+            grid-column: 1;
+            grid-row: 2;
+        }
+        
+        .right-btn {
+            grid-column: 3;
+            grid-row: 2;
+        }
+        
+        .down-btn {
+            grid-column: 2;
+            grid-row: 3;
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+        
+        .action-btn {
+            width: 50px;
+            height: 50px;
+            background: rgba(255, 87, 34, 0.7);
+            border: 2px solid #c53b13;
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 18px;
+            color: white;
+        }
+        
+        .action-btn:active {
+            background: rgba(255, 87, 34, 1);
+            transform: scale(0.95);
+        }
+        
         /* Responsive */
         @media (max-width: 768px) {
             header {
                 flex-direction: column;
-                gap: 15px;
+                gap: 12px;
             }
             
             h1 {
-                font-size: 1.5rem;
+                font-size: 1.2rem;
                 margin-right: 0;
                 text-align: center;
             }
@@ -314,36 +379,71 @@
                 width: 100%;
             }
             
+            .screen {
+                padding: 20px;
+            }
+            
             .screen h2 {
-                font-size: 1.4rem;
+                font-size: 1.2rem;
             }
             
             .btn {
                 padding: 10px 20px;
-                font-size: 0.8rem;
+                font-size: 0.7rem;
+            }
+            
+            .control-btn, .action-btn {
+                width: 45px;
+                height: 45px;
+                font-size: 16px;
             }
         }
         
         @media (max-width: 480px) {
-            .container {
+            body {
                 padding: 10px;
             }
             
             h1 {
-                font-size: 1.2rem;
+                font-size: 1rem;
             }
             
             .score-board {
                 flex-direction: column;
-                gap: 10px;
+                gap: 8px;
+            }
+            
+            .score-board p {
+                font-size: 0.7rem;
             }
             
             .screen {
-                padding: 20px 15px;
+                padding: 15px;
             }
             
             .screen h2 {
-                font-size: 1.2rem;
+                font-size: 1rem;
+                margin-bottom: 10px;
+            }
+            
+            .screen p {
+                font-size: 0.7rem;
+            }
+            
+            .control-btn, .action-btn {
+                width: 40px;
+                height: 40px;
+                font-size: 14px;
+            }
+            
+            .bg-circle {
+                animation-duration: 12s !important;
+            }
+        }
+        
+        @media (max-width: 350px) {
+            .mobile-controls {
+                transform: scale(0.9);
             }
         }
     </style>
@@ -375,9 +475,8 @@
                     <p>Usa las flechas o WASD para mover la serpiente</p>
                     <button id="startButton" class="btn">Comenzar Juego</button>
                     
-                    <div class="high-score-table">
-                        <h3>Mejores Puntuaciones</h3>
-                        <div id="highScoreList"></div>
+                    <div class="controls">
+                        <p>En móvil: Usa los botones de abajo o desliza el dedo</p>
                     </div>
                 </div>
                 <div id="pauseScreen" class="screen hidden">
@@ -387,10 +486,6 @@
                 <div id="gameOverScreen" class="screen hidden">
                     <h2>¡Game Over!</h2>
                     <p>Puntaje: <span id="finalScore">0</span></p>
-                    <div class="high-score-table">
-                        <h3>Mejores Puntuaciones</h3>
-                        <div id="finalHighScoreList"></div>
-                    </div>
                     <button id="restartButton" class="btn">Jugar de Nuevo</button>
                 </div>
             </div>
@@ -401,26 +496,21 @@
         <div class="game-controls">
             <button id="pauseButton" class="icon-btn hidden" aria-label="Pausar juego">⏸️</button>
         </div>
+        
+        <!-- Controles móviles -->
+        <div class="mobile-controls">
+            <div class="direction-buttons">
+                <button class="control-btn up-btn" id="upButton">↑</button>
+                <button class="control-btn left-btn" id="leftButton">←</button>
+                <button class="control-btn right-btn" id="rightButton">→</button>
+                <button class="control-btn down-btn" id="downButton">↓</button>
+            </div>
+            <div class="action-buttons">
+                <button class="action-btn" id="actionPause">⏸️</button>
+                <button class="action-btn" id="actionRestart">↻</button>
+            </div>
+        </div>
     </div>
-
-    <!-- SVG integrados directamente (no base64) -->
-    <svg id="appleImage" style="display:none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-        <circle cx="256" cy="256" r="248" fill="#ff422c"/>
-        <circle cx="256" cy="256" r="192" fill="#ffebcb"/>
-        <circle cx="256" cy="192" r="64" fill="#ffffff"/>
-    </svg>
-
-    <svg id="headImage" style="display:none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-        <circle cx="256" cy="256" r="248" fill="#4caf50"/>
-        <circle cx="256" cy="256" r="192" fill="#ff5722"/>
-        <circle cx="200" cy="224" r="24" fill="#000000"/>
-        <circle cx="312" cy="224" r="24" fill="#000000"/>
-    </svg>
-
-    <svg id="bodyImage" style="display:none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-        <circle cx="256" cy="256" r="248" fill="#4caf50"/>
-        <circle cx="256" cy="256" r="192" fill="#387c48"/>
-    </svg>
 
     <script>
         class SnakeGame {
@@ -442,10 +532,13 @@
                 this.resumeButton = document.getElementById("resumeButton");
                 this.pauseButton = document.getElementById("pauseButton");
                 
-                // Imágenes SVG
-                this.headImg = document.getElementById("headImage");
-                this.bodyImg = document.getElementById("bodyImage");
-                this.appleImage = document.getElementById("appleImage");
+                // Botones móviles
+                this.upButton = document.getElementById("upButton");
+                this.leftButton = document.getElementById("leftButton");
+                this.rightButton = document.getElementById("rightButton");
+                this.downButton = document.getElementById("downButton");
+                this.actionPause = document.getElementById("actionPause");
+                this.actionRestart = document.getElementById("actionRestart");
                 
                 // Configuración del juego
                 this.box = 20;
@@ -458,6 +551,8 @@
                 this.gameInterval = null;
                 this.isPaused = false;
                 this.gameStarted = false;
+                this.touchStartX = 0;
+                this.touchStartY = 0;
                 
                 // Inicializar el juego
                 this.init();
@@ -477,8 +572,18 @@
                 this.resumeButton.addEventListener("click", () => this.togglePause());
                 this.pauseButton.addEventListener("click", () => this.togglePause());
                 
-                // Event listeners para teclado
+                // Event listeners para botones móviles
+                this.upButton.addEventListener("click", () => this.handleDirectionButton('up'));
+                this.leftButton.addEventListener("click", () => this.handleDirectionButton('left'));
+                this.rightButton.addEventListener("click", () => this.handleDirectionButton('right'));
+                this.downButton.addEventListener("click", () => this.handleDirectionButton('down'));
+                this.actionPause.addEventListener("click", () => this.togglePause());
+                this.actionRestart.addEventListener("click", () => this.startGame());
+                
+                // Event listeners para teclado y touch
                 document.addEventListener("keydown", (e) => this.handleKeyDown(e));
+                document.addEventListener("touchstart", (e) => this.handleTouchStart(e), { passive: false });
+                document.addEventListener("touchmove", (e) => this.handleTouchMove(e), { passive: false });
                 
                 // Dibujar pantalla de inicio
                 this.drawStartScreen();
@@ -487,13 +592,17 @@
             resizeCanvas() {
                 // Ajustar el tamaño del canvas para que sea responsivo
                 const maxWidth = Math.min(600, window.innerWidth - 40);
-                const maxHeight = Math.min(600, window.innerHeight - 200);
+                const maxHeight = Math.min(500, window.innerHeight - 250);
                 
                 const width = Math.floor(maxWidth / this.box) * this.box;
                 const height = Math.floor(maxHeight / this.box) * this.box;
                 
                 this.canvas.width = width;
                 this.canvas.height = height;
+                
+                if (this.gameStarted && !this.isPaused) {
+                    this.food = this.generateFood();
+                }
             }
             
             drawStartScreen() {
@@ -501,15 +610,15 @@
                 
                 // Título
                 this.ctx.fillStyle = '#ffdd40';
-                this.ctx.font = '24px "Press Start 2P", cursive';
+                this.ctx.font = '20px "Press Start 2P", cursive';
                 this.ctx.textAlign = 'center';
                 this.ctx.fillText('Snake Adventure', this.canvas.width / 2, this.canvas.height / 3);
                 
                 // Instrucciones
                 this.ctx.fillStyle = '#ffffff';
-                this.ctx.font = '12px "Press Start 2P", cursive';
+                this.ctx.font = '10px "Press Start 2P", cursive';
                 this.ctx.fillText('Usa las flechas o WASD para mover', this.canvas.width / 2, this.canvas.height / 2);
-                this.ctx.fillText('Presiona P para pausar', this.canvas.width / 2, this.canvas.height / 2 + 30);
+                this.ctx.fillText('Presiona P para pausar', this.canvas.width / 2, this.canvas.height / 2 + 20);
                 
                 // Dibujar una serpiente de ejemplo
                 this.ctx.fillStyle = '#4caf50';
@@ -519,13 +628,13 @@
                     } else {
                         this.ctx.fillStyle = '#4caf50';
                     }
-                    this.ctx.fillRect(this.canvas.width / 2 - 40 + i * 20, this.canvas.height * 2/3, 18, 18);
+                    this.ctx.fillRect(this.canvas.width / 2 - 40 + i * 18, this.canvas.height * 2/3, 16, 16);
                 }
                 
                 // Dibujar una manzana de ejemplo
                 this.ctx.fillStyle = '#ff0000';
                 this.ctx.beginPath();
-                this.ctx.arc(this.canvas.width / 2 + 40, this.canvas.height * 2/3 + 9, 9, 0, Math.PI * 2);
+                this.ctx.arc(this.canvas.width / 2 + 35, this.canvas.height * 2/3 + 8, 8, 0, Math.PI * 2);
                 this.ctx.fill();
             }
             
@@ -560,9 +669,41 @@
             }
             
             generateFood() {
-                const x = Math.floor(Math.random() * (this.canvas.width / this.box)) * this.box;
-                const y = Math.floor(Math.random() * (this.canvas.height / this.box)) * this.box;
-                return { x, y };
+                let newFood;
+                let validPosition = false;
+                let attempts = 0;
+                const maxAttempts = 200; // Aumentado para evitar problemas
+                
+                while (!validPosition && attempts < maxAttempts) {
+                    attempts++;
+                    const x = Math.floor(Math.random() * (this.canvas.width / this.box)) * this.box;
+                    const y = Math.floor(Math.random() * (this.canvas.height / this.box)) * this.box;
+                    
+                    newFood = { x, y };
+                    
+                    // Verificar que la comida no esté en la serpiente
+                    validPosition = !this.snake.some(segment => segment.x === x && segment.y === y);
+                }
+                
+                // Si no se encontró una posición válida después de muchos intentos,
+                // usar una posición por defecto
+                if (!validPosition) {
+                    newFood = { x: this.box * 3, y: this.box * 3 };
+                    
+                    // Asegurarse de que no esté en la serpiente
+                    while (this.snake.some(segment => segment.x === newFood.x && segment.y === newFood.y)) {
+                        newFood.x += this.box;
+                        if (newFood.x >= this.canvas.width) {
+                            newFood.x = this.box;
+                            newFood.y += this.box;
+                        }
+                        if (newFood.y >= this.canvas.height) {
+                            newFood.y = this.box;
+                        }
+                    }
+                }
+                
+                return newFood;
             }
             
             gameLoop() {
@@ -622,10 +763,17 @@
                         // Cabeza
                         this.ctx.fillStyle = '#ff5722';
                         this.ctx.fillRect(segment.x, segment.y, this.box, this.box);
+                        
+                        // Ojos
+                        this.ctx.fillStyle = '#000';
+                        this.ctx.fillRect(segment.x + 4, segment.y + 4, 4, 4);
+                        this.ctx.fillRect(segment.x + 12, segment.y + 4, 4, 4);
                     } else {
                         // Cuerpo
                         this.ctx.fillStyle = '#4caf50';
                         this.ctx.fillRect(segment.x, segment.y, this.box, this.box);
+                        this.ctx.fillStyle = '#387c48';
+                        this.ctx.fillRect(segment.x + 2, segment.y + 2, this.box - 4, this.box - 4);
                     }
                 });
                 
@@ -634,6 +782,10 @@
                 this.ctx.beginPath();
                 this.ctx.arc(this.food.x + this.box/2, this.food.y + this.box/2, this.box/2, 0, Math.PI * 2);
                 this.ctx.fill();
+                
+                // Tallo
+                this.ctx.fillStyle = '#00ff00';
+                this.ctx.fillRect(this.food.x + this.box/2 - 2, this.food.y - 3, 4, 5);
                 
                 // Dibujar información del juego
                 this.ctx.fillStyle = '#ffffff';
@@ -672,46 +824,119 @@
             }
             
             handleKeyDown(e) {
-                if (!this.gameStarted || this.isPaused) return;
+                if (!this.gameStarted) return;
                 
-                // Prevenir comportamiento por defecto para teclas de dirección
-                if ([37, 38, 39, 40, 65, 87, 68, 83].includes(e.keyCode)) {
-                    e.preventDefault();
+                if (e.key === 'p' || e.key === 'P') {
+                    this.togglePause();
+                    return;
                 }
                 
-                switch (e.keyCode) {
-                    case 37: // Flecha izquierda
-                    case 65: // A
-                        if (this.dx === 0) {
+                if (this.isPaused) return;
+                
+                // Control de dirección
+                const key = e.key;
+                const goingUp = this.dy === -this.box;
+                const goingDown = this.dy === this.box;
+                const goingRight = this.dx === this.box;
+                const goingLeft = this.dx === -this.box;
+                
+                if ((key === 'ArrowLeft' || key === 'a' || key === 'A') && !goingRight) {
+                    this.dx = -this.box;
+                    this.dy = 0;
+                } else if ((key === 'ArrowUp' || key === 'w' || key === 'W') && !goingDown) {
+                    this.dx = 0;
+                    this.dy = -this.box;
+                } else if ((key === 'ArrowRight' || key === 'd' || key === 'D') && !goingLeft) {
+                    this.dx = this.box;
+                    this.dy = 0;
+                } else if ((key === 'ArrowDown' || key === 's' || key === 'S') && !goingUp) {
+                    this.dx = 0;
+                    this.dy = this.box;
+                }
+            }
+            
+            handleDirectionButton(direction) {
+                if (!this.gameStarted || this.isPaused) return;
+                
+                const goingUp = this.dy === -this.box;
+                const goingDown = this.dy === this.box;
+                const goingRight = this.dx === this.box;
+                const goingLeft = this.dx === -this.box;
+                
+                switch (direction) {
+                    case 'left':
+                        if (!goingRight) {
                             this.dx = -this.box;
                             this.dy = 0;
                         }
                         break;
-                    case 38: // Flecha arriba
-                    case 87: // W
-                        if (this.dy === 0) {
+                    case 'up':
+                        if (!goingDown) {
                             this.dx = 0;
                             this.dy = -this.box;
                         }
                         break;
-                    case 39: // Flecha derecha
-                    case 68: // D
-                        if (this.dx === 0) {
+                    case 'right':
+                        if (!goingLeft) {
                             this.dx = this.box;
                             this.dy = 0;
                         }
                         break;
-                    case 40: // Flecha abajo
-                    case 83: // S
-                        if (this.dy === 0) {
+                    case 'down':
+                        if (!goingUp) {
                             this.dx = 0;
                             this.dy = this.box;
                         }
                         break;
-                    case 80: // P - Pausa
-                        this.togglePause();
-                        break;
                 }
+            }
+            
+            handleTouchStart(e) {
+                this.touchStartX = e.touches[0].clientX;
+                this.touchStartY = e.touches[0].clientY;
+                
+                if (this.gameStarted && !this.isPaused) {
+                    e.preventDefault();
+                }
+            }
+            
+            handleTouchMove(e) {
+                if (!this.gameStarted || this.isPaused) return;
+                
+                e.preventDefault();
+                
+                const touchEndX = e.touches[0].clientX;
+                const touchEndY = e.touches[0].clientY;
+                
+                const dx = touchEndX - this.touchStartX;
+                const dy = touchEndY - this.touchStartY;
+                
+                // Determinar la dirección del deslizamiento
+                if (Math.abs(dx) > Math.abs(dy)) {
+                    if (dx > 0 && this.dx !== -this.box) {
+                        // Deslizar a la derecha
+                        this.dx = this.box;
+                        this.dy = 0;
+                    } else if (dx < 0 && this.dx !== this.box) {
+                        // Deslizar a la izquierda
+                        this.dx = -this.box;
+                        this.dy = 0;
+                    }
+                } else {
+                    if (dy > 0 && this.dy !== -this.box) {
+                        // Deslizar hacia abajo
+                        this.dx = 0;
+                        this.dy = this.box;
+                    } else if (dy < 0 && this.dy !== this.box) {
+                        // Deslizar hacia arriba
+                        this.dx = 0;
+                        this.dy = -this.box;
+                    }
+                }
+                
+                // Actualizar posición inicial para el próximo movimiento
+                this.touchStartX = touchEndX;
+                this.touchStartY = touchEndY;
             }
         }
         
