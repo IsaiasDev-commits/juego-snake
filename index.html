@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Snake vs IA - Records por Rondas</title>
+    <title>Snake vs IA - Velocidad Mejorada</title>
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     <style>
         * {
@@ -266,8 +266,6 @@
             bottom: 15px;
             right: 15px;
             z-index: 10;
-            display: flex;
-            gap: 10px;
         }
         
         .icon-btn {
@@ -336,37 +334,6 @@
             z-index: 2;
         }
         
-        .records-container {
-            margin-top: 15px;
-            background: rgba(0, 0, 0, 0.7);
-            padding: 10px;
-            border-radius: 8px;
-            border: 2px solid #ffdd40;
-        }
-        
-        .records-title {
-            text-align: center;
-            font-size: 0.8rem;
-            margin-bottom: 8px;
-            color: #ffdd40;
-        }
-        
-        .records-list {
-            display: flex;
-            justify-content: space-around;
-            font-size: 0.7rem;
-        }
-        
-        .record-item {
-            text-align: center;
-        }
-        
-        .record-value {
-            font-size: 0.9rem;
-            color: #ffdd40;
-            margin-top: 3px;
-        }
-        
         /* Responsive */
         @media (max-width: 768px) {
             header {
@@ -395,11 +362,6 @@
             .btn {
                 padding: 8px 16px;
                 font-size: 0.6rem;
-            }
-            
-            .records-list {
-                flex-direction: column;
-                gap: 8px;
             }
         }
         
@@ -441,17 +403,6 @@
             .touch-instructions {
                 font-size: 0.6rem;
             }
-            
-            .game-controls {
-                bottom: 10px;
-                right: 10px;
-            }
-            
-            .icon-btn {
-                width: 35px;
-                height: 35px;
-                font-size: 0.8rem;
-            }
         }
     </style>
 </head>
@@ -467,11 +418,10 @@
 
     <div class="container">
         <header>
-            <h1>Snake vs IA - Por Rondas</h1>
+            <h1>Snake vs IA - ¡200 puntos!</h1>
             <div class="score-board">
-                <p>Tú: <span id="score">0</span>/50</p>
-                <p>IA: <span id="iaScore">0</span>/50</p>
-                <p>Ronda: <span id="round">1</span>/5</p>
+                <p>Tú: <span id="score">0</span>/200</p>
+                <p>IA: <span id="iaScore">0</span>/200</p>
             </div>
         </header>
 
@@ -486,61 +436,28 @@
             <div id="gameOverlay">
                 <div id="startScreen" class="screen">
                     <h2>Snake vs IA</h2>
-                    <p>¡Gana 3 de 5 rondas para ganar el juego!</p>
-                    <p>Cada ronda: primero en 50 puntos gana</p>
+                    <p>¡El primero en llegar a 200 puntos gana!</p>
+                    <p>Controles: Flechas o WASD para mover</p>
+                    <p>¡Cuidado! La serpiente IA te robará la comida</p>
                     <button id="startButton" class="btn">Comenzar Juego</button>
-                    
-                    <div class="records-container">
-                        <div class="records-title">RÉCORDS</div>
-                        <div class="records-list">
-                            <div class="record-item">
-                                <div>Victorias</div>
-                                <div id="recordWins" class="record-value">0</div>
-                            </div>
-                            <div class="record-item">
-                                <div>Rondas Ganadas</div>
-                                <div id="recordRounds" class="record-value">0</div>
-                            </div>
-                            <div class="record-item">
-                                <div>Mejor Racha</div>
-                                <div id="recordStreak" class="record-value">0</div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
                 <div id="pauseScreen" class="screen hidden">
                     <h2>Juego Pausado</h2>
                     <button id="resumeButton" class="btn">Continuar</button>
                 </div>
-                <div id="roundScreen" class="screen hidden">
-                    <h2 id="roundTitle">¡Ronda Completa!</h2>
-                    <p id="roundMessage"></p>
-                    <p>Tú: <span id="roundPlayerScore">0</span> puntos</p>
-                    <p>IA: <span id="roundIaScore">0</span> puntos</p>
-                    <button id="nextRoundButton" class="btn">Siguiente Ronda</button>
-                </div>
                 <div id="gameOverScreen" class="screen hidden">
-                    <h2 id="gameOverTitle">¡Juego Terminado!</h2>
+                    <h2>¡Game Over!</h2>
                     <p id="gameOverMessage"></p>
-                    <p>Victorias: <span id="finalWins">0</span>/5</p>
-                    <div class="records-container" style="margin-top: 15px;">
-                        <div class="records-title">RÉCORDS ACTUALIZADOS</div>
-                        <div class="records-list">
-                            <div class="record-item">
-                                <div>Victorias</div>
-                                <div id="finalRecordWins" class="record-value">0</div>
-                            </div>
-                            <div class="record-item">
-                                <div>Rondas Ganadas</div>
-                                <div id="finalRecordRounds" class="record-value">0</div>
-                            </div>
-                            <div class="record-item">
-                                <div>Mejor Racha</div>
-                                <div id="finalRecordStreak" class="record-value">0</div>
-                            </div>
-                        </div>
-                    </div>
-                    <button id="restartButton" class="btn">Juego Nuevo</button>
+                    <p>Tú: <span id="finalScore">0</span> puntos</p>
+                    <p>IA: <span id="finalIaScore">0</span> puntos</p>
+                    <button id="restartButton" class="btn">Jugar de Nuevo</button>
+                </div>
+                <div id="winScreen" class="screen hidden">
+                    <h2 id="winTitle">¡Felicidades!</h2>
+                    <p id="winMessage"></p>
+                    <p>Tú: <span id="winScore">0</span> puntos</p>
+                    <p>IA: <span id="winIaScore">0</span> puntos</p>
+                    <button id="winRestartButton" class="btn">Jugar de Nuevo</button>
                 </div>
             </div>
             
@@ -549,7 +466,6 @@
 
         <div class="game-controls">
             <button id="pauseButton" class="icon-btn hidden" aria-label="Pausar juego">⏸️</button>
-            <button id="restartRoundButton" class="icon-btn hidden" aria-label="Reiniciar ronda">↻</button>
         </div>
         
         <!-- Instrucciones para controles táctiles -->
@@ -565,36 +481,28 @@
                 this.ctx = this.canvas.getContext("2d");
                 this.scoreDisplay = document.getElementById("score");
                 this.iaScoreDisplay = document.getElementById("iaScore");
-                this.roundDisplay = document.getElementById("round");
-                this.recordWins = document.getElementById("recordWins");
-                this.recordRounds = document.getElementById("recordRounds");
-                this.recordStreak = document.getElementById("recordStreak");
-                this.finalWins = document.getElementById("finalWins");
-                this.finalRecordWins = document.getElementById("finalRecordWins");
-                this.finalRecordRounds = document.getElementById("finalRecordRounds");
-                this.finalRecordStreak = document.getElementById("finalRecordStreak");
-                this.roundPlayerScore = document.getElementById("roundPlayerScore");
-                this.roundIaScore = document.getElementById("roundIaScore");
-                this.roundTitle = document.getElementById("roundTitle");
-                this.roundMessage = document.getElementById("roundMessage");
-                this.gameOverTitle = document.getElementById("gameOverTitle");
+                this.finalScoreDisplay = document.getElementById("finalScore");
+                this.finalIaScoreDisplay = document.getElementById("finalIaScore");
+                this.winScoreDisplay = document.getElementById("winScore");
+                this.winIaScoreDisplay = document.getElementById("winIaScore");
                 this.gameOverMessage = document.getElementById("gameOverMessage");
+                this.winTitle = document.getElementById("winTitle");
+                this.winMessage = document.getElementById("winMessage");
                 this.progressPlayer = document.getElementById("progressPlayer");
                 this.progressIA = document.getElementById("progressIA");
                 
                 // Pantallas
                 this.startScreen = document.getElementById("startScreen");
                 this.pauseScreen = document.getElementById("pauseScreen");
-                this.roundScreen = document.getElementById("roundScreen");
                 this.gameOverScreen = document.getElementById("gameOverScreen");
+                this.winScreen = document.getElementById("winScreen");
                 
                 // Botones
                 this.startButton = document.getElementById("startButton");
                 this.restartButton = document.getElementById("restartButton");
-                this.nextRoundButton = document.getElementById("nextRoundButton");
                 this.resumeButton = document.getElementById("resumeButton");
                 this.pauseButton = document.getElementById("pauseButton");
-                this.restartRoundButton = document.getElementById("restartRoundButton");
+                this.winRestartButton = document.getElementById("winRestartButton");
                 
                 // Configuración del juego
                 this.box = 20;
@@ -605,24 +513,16 @@
                 this.food = {};
                 this.score = 0;
                 this.iaScore = 0;
-                this.round = 1;
-                this.maxRounds = 5;
-                this.playerWins = 0;
-                this.roundsToWin = 3;
-                this.winningScore = 50;
+                this.winningScore = 200;
+                this.highScore = localStorage.getItem('snakeHighScore') || 0;
                 this.gameInterval = null;
                 this.isPaused = false;
                 this.gameStarted = false;
                 this.touchStartX = 0;
                 this.touchStartY = 0;
                 this.iaMoveCounter = 0;
-                this.iaMoveFrequency = 5;
-                
-                // Records
-                this.totalWins = parseInt(localStorage.getItem('snakeTotalWins')) || 0;
-                this.totalRounds = parseInt(localStorage.getItem('snakeTotalRounds')) || 0;
-                this.bestStreak = parseInt(localStorage.getItem('snakeBestStreak')) || 0;
-                this.currentStreak = 0;
+                this.iaMoveFrequency = 1; // IA se mueve a la misma velocidad que el jugador
+                this.gameSpeed = 100; // Velocidad aumentada (menor número = más rápido)
                 
                 // Inicializar el juego
                 this.init();
@@ -633,16 +533,15 @@
                 this.resizeCanvas();
                 window.addEventListener("resize", () => this.resizeCanvas());
                 
-                // Actualizar records
-                this.updateRecordsDisplay();
-                
                 // Event listeners para botones
                 this.startButton.addEventListener("click", () => this.startGame());
-                this.restartButton.addEventListener("click", () => this.startNewGame());
-                this.nextRoundButton.addEventListener("click", () => this.nextRound());
+                this.restartButton.addEventListener("click", () => this.startGame());
+                this.winRestartButton.addEventListener("click", () => this.startGame());
                 this.resumeButton.addEventListener("click", () => this.togglePause());
                 this.pauseButton.addEventListener("click", () => this.togglePause());
-                this.restartRoundButton.addEventListener("click", () => this.restartRound());
+                
+                // Event listeners para teclado
+                document.addEventListener("keydown", (e) => this.handleKeyDown(e));
                 
                 // Event listeners para touch
                 this.canvas.addEventListener("touchstart", (e) => this.handleTouchStart(e), { passive: false });
@@ -680,29 +579,45 @@
                 // Instrucciones
                 this.ctx.fillStyle = '#ffffff';
                 this.ctx.font = '8px "Press Start 2P", cursive';
-                this.ctx.fillText('Gana 3 de 5 rondas', this.canvas.width / 2, this.canvas.height / 2);
-                this.ctx.fillText('Desliza para mover', this.canvas.width / 2, this.canvas.height / 2 + 15);
-            }
-            
-            startNewGame() {
-                // Reiniciar estadísticas del juego
-                this.round = 1;
-                this.playerWins = 0;
-                this.currentStreak = 0;
-                this.startGame();
+                this.ctx.fillText('¡Alcanza 200 puntos antes que la IA!', this.canvas.width / 2, this.canvas.height / 2);
+                this.ctx.fillText('Controles: Flechas o WASD', this.canvas.width / 2, this.canvas.height / 2 + 15);
+                
+                // Dibujar una serpiente de ejemplo (jugador)
+                this.ctx.fillStyle = '#4caf50';
+                for (let i = 0; i < 5; i++) {
+                    if (i === 0) {
+                        this.ctx.fillStyle = '#ff5722';
+                    } else {
+                        this.ctx.fillStyle = '#4caf50';
+                    }
+                    this.ctx.fillRect(this.canvas.width / 2 - 60 + i * 16, this.canvas.height * 2/3, 14, 14);
+                }
+                
+                // Dibujar serpiente IA de ejemplo
+                this.ctx.fillStyle = '#9c27b0';
+                for (let i = 0; i < 5; i++) {
+                    if (i === 0) {
+                        this.ctx.fillStyle = '#673ab7';
+                    } else {
+                        this.ctx.fillStyle = '#9c27b0';
+                    }
+                    this.ctx.fillRect(this.canvas.width / 2 + 10 + i * 16, this.canvas.height * 2/3, 14, 14);
+                }
+                
+                // Dibujar una manzana de ejemplo
+                this.ctx.fillStyle = '#ff0000';
+                this.ctx.beginPath();
+                this.ctx.arc(this.canvas.width / 2, this.canvas.height * 2/3 + 7, 7, 0, Math.PI * 2);
+                this.ctx.fill();
             }
             
             startGame() {
                 // Ocultar pantallas
                 this.startScreen.classList.add("hidden");
                 this.gameOverScreen.classList.add("hidden");
-                this.roundScreen.classList.add("hidden");
+                this.winScreen.classList.add("hidden");
                 this.pauseScreen.classList.add("hidden");
                 this.pauseButton.classList.remove("hidden");
-                this.restartRoundButton.classList.remove("hidden");
-                
-                // Actualizar display de ronda
-                this.roundDisplay.textContent = this.round;
                 
                 // Inicializar serpiente del jugador
                 this.snake = [
@@ -725,15 +640,12 @@
                 // Generar comida
                 this.food = this.generateFood();
                 
-                // Reiniciar puntajes de la ronda
+                // Reiniciar puntajes
                 this.score = 0;
                 this.iaScore = 0;
                 this.scoreDisplay.textContent = this.score;
                 this.iaScoreDisplay.textContent = this.iaScore;
                 this.updateProgressBars();
-                
-                // Configurar velocidad IA inicial
-                this.iaMoveFrequency = 5;
                 
                 // Iniciar el juego
                 this.gameStarted = true;
@@ -744,8 +656,8 @@
                     clearInterval(this.gameInterval);
                 }
                 
-                // Iniciar el bucle del juego
-                this.gameInterval = setInterval(() => this.update(), 150);
+                // Iniciar el bucle del juego con velocidad aumentada
+                this.gameInterval = setInterval(() => this.update(), this.gameSpeed);
             }
             
             update() {
@@ -761,14 +673,14 @@
                     head.x >= this.canvas.width || 
                     head.y >= this.canvas.height
                 ) {
-                    this.finishRound(false);
+                    this.gameOver(false);
                     return;
                 }
                 
                 // Detectar colisiones consigo misma
                 for (let i = 0; i < this.snake.length; i++) {
                     if (this.snake[i].x === head.x && this.snake[i].y === head.y) {
-                        this.finishRound(false);
+                        this.gameOver(false);
                         return;
                     }
                 }
@@ -776,7 +688,7 @@
                 // Detectar colisiones con la serpiente IA
                 for (let i = 0; i < this.snakeIA.length; i++) {
                     if (this.snakeIA[i].x === head.x && this.snakeIA[i].y === head.y) {
-                        this.finishRound(false);
+                        this.gameOver(false);
                         return;
                     }
                 }
@@ -790,9 +702,9 @@
                     this.scoreDisplay.textContent = this.score;
                     this.updateProgressBars();
                     
-                    // Verificar victoria en la ronda
+                    // Verificar victoria
                     if (this.score >= this.winningScore) {
-                        this.finishRound(true);
+                        this.victory(true);
                         return;
                     }
                     
@@ -802,12 +714,8 @@
                     this.snake.pop();
                 }
                 
-                // Mover la serpiente IA
-                this.iaMoveCounter++;
-                if (this.iaMoveCounter >= this.iaMoveFrequency) {
-                    this.iaMoveCounter = 0;
-                    this.moveIA();
-                }
+                // Mover la serpiente IA (a la misma velocidad que el jugador)
+                this.moveIA();
                 
                 // Dibujar el juego
                 this.draw();
@@ -881,9 +789,9 @@
                     this.iaScoreDisplay.textContent = this.iaScore;
                     this.updateProgressBars();
                     
-                    // Verificar victoria de la IA en la ronda
+                    // Verificar victoria de la IA
                     if (this.iaScore >= this.winningScore) {
-                        this.finishRound(false);
+                        this.victory(false);
                         return;
                     }
                     
@@ -948,7 +856,6 @@
                 this.ctx.textAlign = 'left';
                 this.ctx.fillText(`Tú: ${this.score}`, 10, 15);
                 this.ctx.fillText(`IA: ${this.iaScore}`, 10, 30);
-                this.ctx.fillText(`Ronda: ${this.round}/${this.maxRounds}`, 10, 45);
             }
             
             generateFood() {
@@ -981,117 +888,82 @@
                 this.progressIA.style.width = `${iaPercent}%`;
             }
             
-            finishRound(playerWon) {
+            handleKeyDown(e) {
+                if (!this.gameStarted) return;
+                
+                // Control de pausa
+                if (e.key === 'p' || e.key === 'P') {
+                    this.togglePause();
+                    return;
+                }
+                
+                if (this.isPaused) return;
+                
+                // Control de dirección con flechas y WASD
+                const key = e.key;
+                const goingUp = this.dy === -this.box;
+                const goingDown = this.dy === this.box;
+                const goingRight = this.dx === this.box;
+                const goingLeft = this.dx === -this.box;
+                
+                // Flechas y WASD
+                if ((key === 'ArrowLeft' || key === 'a' || key === 'A') && !goingRight) {
+                    this.dx = -this.box;
+                    this.dy = 0;
+                } else if ((key === 'ArrowUp' || key === 'w' || key === 'W') && !goingDown) {
+                    this.dx = 0;
+                    this.dy = -this.box;
+                } else if ((key === 'ArrowRight' || key === 'd' || key === 'D') && !goingLeft) {
+                    this.dx = this.box;
+                    this.dy = 0;
+                } else if ((key === 'ArrowDown' || key === 's' || key === 'S') && !goingUp) {
+                    this.dx = 0;
+                    this.dy = this.box;
+                }
+            }
+            
+            gameOver(isWin) {
                 clearInterval(this.gameInterval);
                 this.gameStarted = false;
                 
-                // Actualizar estadísticas
-                if (playerWon) {
-                    this.playerWins++;
-                    this.currentStreak++;
-                    this.totalRounds++;
-                    
-                    // Actualizar mejor racha si es necesario
-                    if (this.currentStreak > this.bestStreak) {
-                        this.bestStreak = this.currentStreak;
-                    }
+                // Mostrar pantalla de Game Over
+                this.finalScoreDisplay.textContent = this.score;
+                this.finalIaScoreDisplay.textContent = this.iaScore;
+                
+                if (isWin) {
+                    this.gameOverMessage.textContent = "¡Has ganado!";
                 } else {
-                    this.currentStreak = 0;
-                    this.totalRounds++;
-                }
-                
-                // Guardar records
-                this.saveRecords();
-                
-                // Mostrar pantalla de ronda completada
-                this.roundPlayerScore.textContent = this.score;
-                this.roundIaScore.textContent = this.iaScore;
-                
-                if (playerWon) {
-                    this.roundTitle.textContent = "¡Ronda Ganada!";
-                    this.roundMessage.textContent = "¡Has ganado esta ronda!";
-                } else {
-                    this.roundTitle.textContent = "¡Ronda Perdida!";
-                    this.roundMessage.textContent = "La IA ha ganado esta ronda";
-                }
-                
-                this.roundScreen.classList.remove("hidden");
-                this.pauseButton.classList.add("hidden");
-                this.restartRoundButton.classList.add("hidden");
-                
-                // Verificar si el juego ha terminado
-                if (this.playerWins >= this.roundsToWin || this.round >= this.maxRounds) {
-                    // Pequeña demora antes de mostrar la pantalla de fin de juego
-                    setTimeout(() => {
-                        this.finishGame();
-                    }, 1500);
-                }
-            }
-            
-            nextRound() {
-                // Avanzar a la siguiente ronda
-                this.round++;
-                
-                // Verificar si el juego ha terminado
-                if (this.playerWins >= this.roundsToWin || this.round > this.maxRounds) {
-                    this.finishGame();
-                } else {
-                    // Iniciar la siguiente ronda
-                    this.roundDisplay.textContent = this.round;
-                    this.startGame();
-                }
-            }
-            
-            restartRound() {
-                // Reiniciar la ronda actual sin penalización
-                if (this.gameStarted) {
-                    this.startGame();
-                }
-            }
-            
-            finishGame() {
-                // Actualizar victorias totales si el jugador ganó
-                if (this.playerWins >= this.roundsToWin) {
-                    this.totalWins++;
-                }
-                
-                // Guardar records
-                this.saveRecords();
-                
-                // Mostrar pantalla de fin de juego
-                this.finalWins.textContent = this.playerWins;
-                this.finalRecordWins.textContent = this.totalWins;
-                this.finalRecordRounds.textContent = this.totalRounds;
-                this.finalRecordStreak.textContent = this.bestStreak;
-                
-                if (this.playerWins >= this.roundsToWin) {
-                    this.gameOverTitle.textContent = "¡Has Ganado!";
-                    this.gameOverMessage.textContent = `¡Ganaste ${this.playerWins} de ${this.maxRounds} rondas!`;
-                } else {
-                    this.gameOverTitle.textContent = "¡Juego Terminado!";
-                    this.gameOverMessage.textContent = `Ganaste ${this.playerWins} de ${this.maxRounds} rondas`;
+                    this.gameOverMessage.textContent = "¡La IA te ha vencido!";
                 }
                 
                 this.gameOverScreen.classList.remove("hidden");
                 this.pauseButton.classList.add("hidden");
-                this.restartRoundButton.classList.add("hidden");
             }
             
-            saveRecords() {
-                // Guardar records en localStorage
-                localStorage.setItem('snakeTotalWins', this.totalWins);
-                localStorage.setItem('snakeTotalRounds', this.totalRounds);
-                localStorage.setItem('snakeBestStreak', this.bestStreak);
+            victory(isPlayer) {
+                clearInterval(this.gameInterval);
+                this.gameStarted = false;
                 
-                // Actualizar display de records
-                this.updateRecordsDisplay();
-            }
-            
-            updateRecordsDisplay() {
-                // Actualizar la visualización de records
-                this.recordWins.textContent = this.totalWins;
-                this.recordRounds.textContent = this.totalRounds;
-                this.recordStreak.textContent = this.bestStreak;
+                // Mostrar pantalla de victoria
+                this.winScoreDisplay.textContent = this.score;
+                this.winIaScoreDisplay.textContent = this.iaScore;
+                
+                if (isPlayer) {
+                    this.winTitle.textContent = "¡Felicidades!";
+                    this.winMessage.textContent = "¡Has alcanzado 200 puntos primero!";
+                } else {
+                    this.winTitle.textContent = "¡Game Over!";
+                    this.winMessage.textContent = "La IA alcanzó 200 puntos primero";
+                }
+                
+                this.winScreen.classList.remove("hidden");
+                this.pauseButton.classList.add("hidden");
+                
+                // Actualizar record si es necesario
+                if (this.score > this.highScore) {
+                    this.highScore = this.score;
+                    localStorage.setItem('snakeHighScore', this.highScore);
+                }
             }
             
             togglePause() {
